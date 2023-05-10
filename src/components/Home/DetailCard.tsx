@@ -10,13 +10,13 @@ const ClaspCard: React.FC<Props> = ({}) => {
   let [accordionCardData, setAccordionCardData] = useState<any[]>([
     {
       id: 1,
-      isActive: false,
-      cardTitle: 'black cord',
+      isActive: true,
+      cardTitle: 'black',
     },
     {
       id: 2,
       isActive: false,
-      cardTitle: 'golden cord',
+      cardTitle: 'golden',
     },
   ])
 
