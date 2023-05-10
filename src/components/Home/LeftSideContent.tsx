@@ -1,7 +1,7 @@
-import React from "react";
-import mobileImg from "../../assets/img/mobile-img.png";
-import * as Icons from "../global/Icons";
-import cardImg from "../../assets/img/Card-img.png";
+import React from 'react'
+import mobileImg from '../../assets/img/mobile-img.png'
+import * as Icons from '../global/Icons'
+import cardImg from '../../assets/img/card-img.png'
 
 const LeftSideContent: React.FC = () => {
   return (
@@ -16,9 +16,9 @@ const LeftSideContent: React.FC = () => {
         <div className="bg-white rounded-xl flex justify-center items-center gap-1">
           <Icons.MoneyIcon />
           <p className="sm:font-bold font-medium text-sm md:text-base">
-            21.95{" "}
+            21.95{' '}
             <span className="italic font-normal text-xs text-gray-400">
-              incl,{" "}
+              incl,{' '}
             </span>
             <span className="italic font-medium text-xs text-gray-400">
               BTW
@@ -39,7 +39,7 @@ const LeftSideContent: React.FC = () => {
         </p>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default LeftSideContent;
+export default LeftSideContent
