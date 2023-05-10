@@ -39,14 +39,12 @@ function Icon({ open, isCompleted }) {
 
 export default function RightSideContent() {
   const handleOpen = (index: number) => {
-    if (steps < 3) {
-      let updatedData = [...accordionData]
-      updatedData.forEach((element) => (element.isActive = false))
-      if (updatedData[index].isCompleted) {
-        updatedData[index].isActive = true
-      }
-      setAccordionData((accordionData = updatedData))
+    let updatedData = [...accordionData]
+    updatedData.forEach((element) => (element.isActive = false))
+    if (updatedData[index].isCompleted) {
+      updatedData[index].isActive = true
     }
+    setAccordionData((accordionData = updatedData))
   }
   let [steps, setSteps] = useState<number>(0)
 
