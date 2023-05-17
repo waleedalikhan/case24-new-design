@@ -147,25 +147,31 @@ const RightSideContent: React.FC = ({}) => {
           <AccordionHeader onClick={() => handleOpen(index)}>
             <div className="flex gap-2 items-center w-full justify-between">
               <div className="flex gap-2 items-center">
-                <div
-                  className={cn(
-                    'w-[35px] h-[35px] flex justify-center rounded-full text-white font-workSans',
-                    {
-                      'bg-gray-800': !element.isCompleted,
-                      'bg-primary': element.isCompleted,
-                    },
-                  )}
-                >
-                  <p className="flex items-center">{index + 1}</p>
-                </div>
-                <div>
-                  <p className="md:text-xl text-sm font-workSans">
-                    {element.title}
-                  </p>
+                <div className="flex flex-wrap gap-2 items-center">
+                  <div>
+                    <div
+                      className={cn(
+                        'w-[35px] h-[35px] flex justify-center rounded-full text-white font-workSans',
+                        {
+                          'bg-gray-800': !element.isCompleted,
+                          'bg-primary': element.isCompleted,
+                        },
+                      )}
+                    >
+                      <p className="flex items-center">{index + 1}</p>
+                    </div>
+                  </div>
+                  <div>
+                    <p className="md:text-xl text-sm font-workSans truncate">
+                      {element.title}
+                    </p>
+                  </div>
                 </div>
               </div>
               <div>
-                <p>{element.selectedValue}</p>
+                <p className="md:text-2xl text-sm font-workSans">
+                  {element.selectedValue}
+                </p>
               </div>
             </div>
           </AccordionHeader>
