@@ -3,14 +3,14 @@ import blackCord from '../../assets/img/blackCord-img.png'
 import cn from 'classnames'
 
 type Props = {
-  cardTitle?: string
+  onChange?: (value: string) => void
 }
 
-const ClaspCard: React.FC<Props> = ({}) => {
+const ClaspCard: React.FC<Props> = ({ onChange }) => {
   let [accordionCardData, setAccordionCardData] = useState<any[]>([
     {
       id: 1,
-      isActive: true,
+      isActive: false,
       cardTitle: 'black clasp',
     },
     {
@@ -20,18 +20,19 @@ const ClaspCard: React.FC<Props> = ({}) => {
     },
   ])
 
-  const handleCheck = (index: number) => {
+  const handleCheck = (value: string, index: number) => {
     let updatedData = [...accordionCardData]
     updatedData.forEach((element) => (element.isActive = false))
     updatedData[index].isActive = true
     setAccordionCardData((accordionCardData = updatedData))
+    onChange && onChange(value)
   }
 
   const accordionData = accordionCardData.map((element: any, index: number) => {
     return (
-      <React.Fragment>
+      <React.Fragment key={`${element.id}${index}`}>
         <div
-          onClick={() => handleCheck(index)}
+          onClick={() => handleCheck(element.cardTitle, index)}
           className={cn(
             'w-full flex justify-between border-2 sm:h-[200px] h-[150px] p-2 sm:p-5 rounded-md mb-6 cursor-pointer',
             {
@@ -41,16 +42,12 @@ const ClaspCard: React.FC<Props> = ({}) => {
           )}
         >
           <div className="flex gap-2 sm:gap-4 items-center">
-            <label
-              className="relative flex cursor-pointer items-center rounded-full"
-              htmlFor="pink"
-            >
+            <label className="relative flex cursor-pointer items-center rounded-full">
               <input
-                id="pink"
-                name="color"
                 type="radio"
                 className="before:content[''] peer relative h-3.5 w-3.5 cursor-pointer appearance-none rounded-full border border-blue-gray-200 text-primary transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-primary checked:before:bg-primary"
                 checked={element.isActive}
+                onChange={() => {}}
               />
               <div className="pointer-events-none absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-primary opacity-0 transition-opacity peer-checked:opacity-100">
                 <svg
@@ -68,10 +65,10 @@ const ClaspCard: React.FC<Props> = ({}) => {
               src={blackCord}
               alt=""
             />
-            <span>{element.cardTitle}</span>
+            <span className="font-workSans">{element.cardTitle}</span>
           </div>
           <div>
-            <button className="bg-green-100 text-md shadow-lg w-16 md:w-24 h-10 text-green-800 rounded-lg font-bold">
+            <button className="bg-green-100 text-md shadow-lg w-16 md:w-24 h-10 text-green-800 rounded-lg font-bold font-workSans">
               Gratis
             </button>
           </div>

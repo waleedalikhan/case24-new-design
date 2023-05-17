@@ -9,8 +9,11 @@ module.exports = withMT({
   theme: {
     extend: {
       colors: {
-        primary: "#d96450",
+        primary: "#ea5a47",
       },
+    },
+    fontFamily: {
+      workSans: ["Work Sans", "sans-serif"],
     },
   },
   plugins: [],

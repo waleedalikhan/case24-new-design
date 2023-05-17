@@ -13,7 +13,7 @@ const ContinueBtn: React.FC<Props> = ({ onClick, title, svgIcon }) => {
         className="bg-primary h-10 w-full text-white rounded-xl flex justify-center items-center gap-2"
         onClick={onClick}
       >
-        <span>{title}</span>
+        <span className="font-workSans">{title}</span>
         <div>{svgIcon}</div>
       </button>
     </div>

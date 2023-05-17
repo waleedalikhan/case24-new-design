@@ -10,6 +10,7 @@ import ContinueBtn from './ContinueBtn'
 import CordCard from './CordCard'
 import DetailCard from './DetailCard'
 import ClaspCard from './ClaspCard'
+import AccordionSelector from './AccordionSelector'
 
 // @ts-ignore
 function Icon({ open, isCompleted }) {
@@ -37,17 +38,14 @@ function Icon({ open, isCompleted }) {
   )
 }
 
-export default function RightSideContent() {
+const RightSideContent: React.FC = ({}) => {
   const handleOpen = (index: number) => {
     let updatedData = [...accordionData]
     updatedData.forEach((element) => (element.isActive = false))
-    if (updatedData[index].isCompleted) {
-      updatedData[index].isActive = true
-    }
+    updatedData[index].isActive = true
     setAccordionData((accordionData = updatedData))
   }
   let [steps, setSteps] = useState<number>(0)
-
   let [accordionData, setAccordionData] = useState<any[]>([
     {
       id: 1,
@@ -57,20 +55,13 @@ export default function RightSideContent() {
       content: () => {
         return (
           <>
-            <div className="px-1 sm:px-2">
-              <select
-                data-te-select-init
-                className="w-full border-2 sm:p-4 p-3 rounded-xl focus:border-[#d96450] focus:border-2 focus:outline-none text-md sm:text-lg font-semibold text-gray-400"
-              >
-                <option value="1">Alcatel 1S 2020</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-                <option value="4">Four</option>
-              </select>
-            </div>
+            <AccordionSelector
+              getSelectedValue={(value: string) => handleItemChange(value, 0)}
+            />
           </>
         )
       },
+      selectedValue: '',
     },
     {
       id: 2,
@@ -81,11 +72,14 @@ export default function RightSideContent() {
         return (
           <>
             <div className="sm:px-4 px-1 h-[350px] overflow-scroll">
-              <CordCard />
+              <CordCard
+                onChange={(value: string) => handleItemChange(value, 1)}
+              />
             </div>
           </>
         )
       },
+      selectedValue: '',
     },
     {
       id: 3,
@@ -96,11 +90,14 @@ export default function RightSideContent() {
         return (
           <>
             <div className="sm:px-4 px-1 h-[350px] overflow-scroll">
-              <DetailCard />
+              <DetailCard
+                onChange={(value: string) => handleItemChange(value, 2)}
+              />
             </div>
           </>
         )
       },
+      selectedValue: '',
     },
     {
       id: 4,
@@ -111,13 +108,22 @@ export default function RightSideContent() {
         return (
           <>
             <div className="sm:px-4 px-1 h-[350px] overflow-scroll">
-              <ClaspCard />
+              <ClaspCard
+                onChange={(value: string) => handleItemChange(value, 3)}
+              />
             </div>
           </>
         )
       },
+      selectedValue: '',
     },
   ])
+
+  const handleItemChange = (value: string, index: number) => {
+    let updatedData = [...accordionData]
+    updatedData[index].selectedValue = value
+    setAccordionData((accordionData = updatedData))
+  }
 
   useEffect(() => {
     if (steps < 4) {
@@ -127,11 +133,11 @@ export default function RightSideContent() {
       updatedData[steps].isCompleted = true
       setAccordionData((accordionData = updatedData))
     }
+    setAccordionData((prevState) => prevState)
   }, [steps])
-
-  const accordion = accordionData.map((element: any, index: number) => {
+  const renderAccordions = accordionData.map((element: any, index: number) => {
     return (
-      <Fragment>
+      <Fragment key={`${element.id}${index}`}>
         <Accordion
           open={element.isActive}
           icon={
@@ -139,25 +145,32 @@ export default function RightSideContent() {
           }
         >
           <AccordionHeader onClick={() => handleOpen(index)}>
-            <div className="flex gap-2 items-center">
-              <div
-                className={cn(
-                  ' w-[35px] h-[35px] flex justify-center rounded-full text-white',
-                  {
-                    'bg-gray-800': !element.isCompleted,
-                    'bg-primary': element.isCompleted,
-                  },
-                )}
-              >
-                <p className="flex items-center">{index + 1}</p>
+            <div className="flex gap-2 items-center w-full justify-between">
+              <div className="flex gap-2 items-center">
+                <div
+                  className={cn(
+                    'w-[35px] h-[35px] flex justify-center rounded-full text-white font-workSans',
+                    {
+                      'bg-gray-800': !element.isCompleted,
+                      'bg-primary': element.isCompleted,
+                    },
+                  )}
+                >
+                  <p className="flex items-center">{index + 1}</p>
+                </div>
+                <div>
+                  <p className="md:text-xl text-sm font-workSans">
+                    {element.title}
+                  </p>
+                </div>
               </div>
               <div>
-                <p className="md:text-xl text-sm">{element.title}</p>
+                <p>{element.selectedValue}</p>
               </div>
             </div>
           </AccordionHeader>
           <AccordionBody>
-            <p>{element.content && element.content()}</p>
+            <div>{element.content && element.content()}</div>
           </AccordionBody>
         </Accordion>
       </Fragment>
@@ -165,8 +178,8 @@ export default function RightSideContent() {
   })
 
   return (
-    <div className="px-6 pt-4 bg-white h-[750px] rounded-3xl">
-      <div>{accordion}</div>
+    <div className="px-6 pt-4 bg-white h-[750px] rounded-lg">
+      <div>{renderAccordions}</div>
       <div className="mt-4">
         <ContinueBtn
           svgIcon={steps < 3 ? <Icons.SideArrowIcon /> : <Icons.CartIcon />}
@@ -181,3 +194,5 @@ export default function RightSideContent() {
     </div>
   )
 }
+
+export default RightSideContent
